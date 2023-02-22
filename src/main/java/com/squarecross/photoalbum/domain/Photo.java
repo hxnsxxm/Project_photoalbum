@@ -30,6 +30,8 @@ public class Photo {
     @CreationTimestamp
     private Date uploadedAt;
 
-    @Column(name = "album_id")
-    private Long albumId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "album_id")
+    //private Long albumId;
+    private Album album;
 }
