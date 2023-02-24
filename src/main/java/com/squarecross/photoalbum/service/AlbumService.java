@@ -1,6 +1,7 @@
 package com.squarecross.photoalbum.service;
 
 import com.squarecross.photoalbum.domain.Album;
+import com.squarecross.photoalbum.dto.AlbumDto;
 import com.squarecross.photoalbum.repository.AlbumRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ public class AlbumService {
     @Autowired
     private AlbumRepository albumRepository;
 
-    public Album getAlbum(Long albumId) {
+    public AlbumDto getAlbum(Long albumId) {
         Optional<Album> res = albumRepository.findById(albumId);
         if (res.isPresent()) {
             return res.get();
@@ -22,7 +23,7 @@ public class AlbumService {
         }
     }
 
-    public Album getAlbum(String albumName) {
+    public AlbumDto getAlbum(String albumName) {
         Optional<Album> res = albumRepository.findByAlbumName(albumName);
         if (res.isPresent()) {
             return res.get();
