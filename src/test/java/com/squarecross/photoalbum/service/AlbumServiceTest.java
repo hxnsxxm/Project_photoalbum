@@ -34,7 +34,7 @@ class AlbumServiceTest {
         AlbumDto resAlbum = albumService.getAlbum(savedAlbum.getAlbumId());
         assertEquals("테스트", resAlbum.getAlbumName());
     }
-
+/*
     @Test
     void getAlbumByName() {
         Album album = new Album();
@@ -46,7 +46,7 @@ class AlbumServiceTest {
 
         //Album resAlbum = albumService.getAlbum("앨범");
     }
-
+*/
     @Test
     void testPhotoCount() {
         Album album = new Album();

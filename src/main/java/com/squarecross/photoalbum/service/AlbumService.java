@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 @Service
@@ -29,7 +32,7 @@ public class AlbumService {
             throw new EntityNotFoundException(String.format("앨범 아이디 %d로 조회되지 않았습니다", albumId));
         }
     }
-
+/*
     public AlbumDto getAlbum(String albumName) {
         Optional<Album> res = albumRepository.findByAlbumName(albumName);
         if (res.isPresent()) {
@@ -40,4 +43,18 @@ public class AlbumService {
             throw new EntityNotFoundException(String.format("앨범명 %s로 조회되지 않았습니다.", albumName));
         }
     }
+*/
+
+    public AlbumDto createAlbum(AlbumDto albumDto) throws IOException {
+        Album album = AlbumMapper.convertToModel(albumDto);
+        this.albumRepository.save(album);
+        this.createAlbumDirectories(album);
+        return AlbumMapper.convertToDto(album);
+    }
+
+    private void createAlbumDirectories(Album album) throws IOException {
+        Files.createDirectories(Paths.get(Constants.PATH_PREFIX + "/photos/original/" + album.getAlbumId()));
+        Files.createDirectories(Paths.get(Constants.PATH_PREFIX + "/photos/thumb/" + album.getAlbumId()));
+    }
+
 }

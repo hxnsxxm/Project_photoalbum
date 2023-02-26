@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/albums")
 public class AlbumController {
@@ -19,7 +21,7 @@ public class AlbumController {
         AlbumDto album = albumService.getAlbum(albumId);
         return new ResponseEntity<>(album, HttpStatus.OK);
     }
-
+/* ** Query String, JSON으로 API GET 요청하기 예시 코드
     @RequestMapping(value="/query", method=RequestMethod.GET)
     public ResponseEntity<AlbumDto> getAlbum(@RequestParam(value="albumId") final Long albumId) {
         AlbumDto album = albumService.getAlbum(albumId);
@@ -31,4 +33,14 @@ public class AlbumController {
         AlbumDto album = albumService.getAlbum(albumDto.getAlbumId());
         return new ResponseEntity<>(album, HttpStatus.OK);
     }
+*/
+
+
+    @RequestMapping(value="", method=RequestMethod.POST)
+    public ResponseEntity<AlbumDto> createAlbum(@RequestBody final AlbumDto albumDto) throws IOException {
+        AlbumDto savedAlbumDto = albumService.createAlbum(albumDto);
+        return new ResponseEntity<>(savedAlbumDto, HttpStatus.OK);
+    }
+
+
 }
