@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
@@ -65,5 +67,14 @@ class AlbumServiceTest {
         photoRepository.save(photo2);
 
         AlbumDto albumDto = albumService.getAlbum(savedAlbum.getAlbumId());
+    }
+
+    @Test
+    void testAlbumCreate() throws IOException {
+        AlbumDto albumDto = new AlbumDto();
+        albumDto.setAlbumName("새로운 앨범");
+        AlbumDto newAlbum = albumService.createAlbum(albumDto);
+
+        albumService.deleteAlbumDirectory(newAlbum);
     }
 }
