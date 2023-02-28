@@ -42,5 +42,12 @@ public class AlbumController {
         return new ResponseEntity<>(savedAlbumDto, HttpStatus.OK);
     }
 
+/*
+    @RequestMapping(value="", method=RequestMethod.GET)
+    public ResponseEntity<List<AlbumDto>>
+    getAlbumList(@RequestParam(value="keyword", required = false, defaultValue = "") final String keyword,
+                 @RequestParam(value="sort", required = false, defaultValue = "byDate") final String sort) {
 
+    }
+*/
 }
