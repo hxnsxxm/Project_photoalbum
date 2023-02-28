@@ -96,10 +96,20 @@ class AlbumServiceTest {
         assertEquals("aaaa", resDate.get(1).getAlbumName());
         assertEquals(2, resDate.size());
 
+        List<Album> resDateAsc = albumRepository.findByAlbumNameContainingOrderByCreatedAtAsc("aaa");
+        assertEquals("aaab", resDateAsc.get(1).getAlbumName());
+        assertEquals("aaaa", resDateAsc.get(0).getAlbumName());
+        assertEquals(2, resDateAsc.size());
+
         List<Album> resName = albumRepository.findByAlbumNameContainingOrderByAlbumNameAsc("aaa");
         assertEquals("aaaa", resName.get(0).getAlbumName());
         assertEquals("aaab", resName.get(1).getAlbumName());
         assertEquals(2, resName.size());
+
+        List<Album> resNameDesc= albumRepository.findByAlbumNameContainingOrderByAlbumNameDesc("aaa");
+        assertEquals("aaaa", resNameDesc.get(1).getAlbumName());
+        assertEquals("aaab", resNameDesc.get(0).getAlbumName());
+        assertEquals(2, resNameDesc.size());
 
     }
 }

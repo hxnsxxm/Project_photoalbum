@@ -70,12 +70,20 @@ public class AlbumService {
         Files.delete(Paths.get(Constants.PATH_PREFIX + "/photos/thumb/" + album.getAlbumId()));
     }
 
-    public List<AlbumDto> getAlbumList(String keyword, String sort) {
+    public List<AlbumDto> getAlbumList(String keyword, String sort, String orderBy) {
         List<Album> albums;
         if (Objects.equals(sort, "byName")) {
-            albums = albumRepository.findByAlbumNameContainingOrderByAlbumNameAsc(keyword);
+            if (Objects.equals(orderBy, "asc")) {
+                albums = albumRepository.findByAlbumNameContainingOrderByAlbumNameAsc(keyword);
+            } else {
+                albums = albumRepository.findByAlbumNameContainingOrderByAlbumNameDesc(keyword);
+            }
         } else if (Objects.equals(sort, "byDate")) {
-            albums = albumRepository.findByAlbumNameContainingOrderByCreatedAtDesc(keyword);
+            if (Objects.equals(orderBy, "asc")) {
+                albums = albumRepository.findByAlbumNameContainingOrderByCreatedAtAsc(keyword);
+            } else {
+                albums = albumRepository.findByAlbumNameContainingOrderByCreatedAtDesc(keyword);
+            }
         } else {
             throw new IllegalArgumentException("알 수 없는 정렬 기준입니다.");
         }
