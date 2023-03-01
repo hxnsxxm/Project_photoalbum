@@ -74,7 +74,7 @@ class AlbumServiceTest {
     @Test
     void testAlbumCreate() throws IOException {
         AlbumDto albumDto = new AlbumDto();
-        albumDto.setAlbumName("새로운 앨범");
+        albumDto.setAlbumName("새로운 앨범4");
         AlbumDto newAlbum = albumService.createAlbum(albumDto);
 
         albumService.deleteAlbumDirectory(newAlbum);
@@ -130,8 +130,29 @@ class AlbumServiceTest {
         assertEquals("변경후", updatedDto.getAlbumName());
     }
 
+    @Test
+    void testDeleteAlbum() throws IOException {
+        // 앨범 생성
+        AlbumDto albumDto = new AlbumDto();
+        albumDto.setAlbumName("삭제 테스트");
+        AlbumDto res = albumService.createAlbum(albumDto);
 
+        // 생성된 앨범 아이디 추출
+        Long albumId = res.getAlbumId();
 
+        // 앨범 삭제
+        albumService.deleteAlbum(albumId);
+
+        // DB에서 제대로 삭제 되었는지 확인
+        //AlbumDto album = albumService.getAlbum(albumId);
+
+    }
+
+    @Test
+    void testDeleteAlbumNumber() throws IOException {
+        long id = 1;
+        albumService.deleteAlbumDirectoriesNumber(id);
+    }
 
 
 }

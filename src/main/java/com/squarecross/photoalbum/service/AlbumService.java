@@ -6,10 +6,12 @@ import com.squarecross.photoalbum.dto.AlbumDto;
 import com.squarecross.photoalbum.mapper.AlbumMapper;
 import com.squarecross.photoalbum.repository.AlbumRepository;
 import com.squarecross.photoalbum.repository.PhotoRepository;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -67,8 +69,11 @@ public class AlbumService {
     }
 
     private void deleteAlbumDirectories(AlbumDto album) throws IOException {
-        Files.delete(Paths.get(Constants.PATH_PREFIX + "/photos/original/" + album.getAlbumId()));
-        Files.delete(Paths.get(Constants.PATH_PREFIX + "/photos/thumb/" + album.getAlbumId()));
+        FileUtils.cleanDirectory(new File(Constants.PATH_PREFIX + "/photos/original/" + album.getAlbumId()));
+        FileUtils.cleanDirectory(new File(Constants.PATH_PREFIX + "/photos/thumb/" + album.getAlbumId()));
+
+        Files.delete(Paths.get(Constants.PATH_PREFIX + "/photos/original/" + album.getAlbumId() ));
+        Files.delete(Paths.get(Constants.PATH_PREFIX + "/photos/thumb/" + album.getAlbumId() ));
     }
 
     public List<AlbumDto> getAlbumList(String keyword, String sort, String orderBy) {
@@ -110,5 +115,25 @@ public class AlbumService {
         updateAlbum.setAlbumName(albumDto.getAlbumName());
         Album savedAlbum = this.albumRepository.save(updateAlbum);
         return AlbumMapper.convertToDto(savedAlbum);
+    }
+
+    public void deleteAlbum(Long albumId) throws IOException {
+        Optional<Album> album = this.albumRepository.findById(albumId);
+        if (album.isEmpty()) {
+            throw new NoSuchElementException(String.format("Album ID '%d'가 존재하지 않습니다."));
+        }
+        AlbumDto albumDto = AlbumMapper.convertToDto(album.get());
+        albumRepository.delete(album.get());
+        this.deleteAlbumDirectory(albumDto);
+    }
+
+    public void deleteAlbumDirectoriesNumber(long albumId) throws IOException {
+
+        FileUtils.cleanDirectory(new File(Constants.PATH_PREFIX + "/photos/original/" + albumId));
+        FileUtils.cleanDirectory(new File(Constants.PATH_PREFIX + "/photos/thumb/" + albumId));
+
+        Files.delete(Paths.get(Constants.PATH_PREFIX + "/photos/original/" + albumId ));
+        Files.delete(Paths.get(Constants.PATH_PREFIX + "/photos/thumb/" + albumId ));
+
     }
 }

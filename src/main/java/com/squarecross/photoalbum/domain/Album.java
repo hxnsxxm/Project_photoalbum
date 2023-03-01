@@ -1,9 +1,9 @@
 package com.squarecross.photoalbum.domain;
 
 
-import javax.persistence.*;
-
 import org.hibernate.annotations.CreationTimestamp;
+
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class Album {
     @CreationTimestamp
     private Date createdAt;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "album")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "album", cascade = CascadeType.ALL)
     private List<Photo> photos;
 
     public Album(){};
