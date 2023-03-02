@@ -24,7 +24,7 @@ public class Photo {
     private String originalUrl;
 
     @Column(name = "file_size")
-    private double fileSize;
+    private int fileSize;
 
     @Column(name = "uploaded_at")
     @CreationTimestamp
@@ -67,11 +67,11 @@ public class Photo {
         this.originalUrl = originalUrl;
     }
 
-    public double getFileSize() {
+    public int getFileSize() {
         return fileSize;
     }
 
-    public void setFileSize(double fileSize) {
+    public void setFileSize(int fileSize) {
         this.fileSize = fileSize;
     }
 
