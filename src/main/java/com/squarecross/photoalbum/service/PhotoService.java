@@ -99,7 +99,7 @@ public class PhotoService {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
         }
     }
-
+/*
     public boolean isImageFile(MultipartFile file) {
         String filename = file.getOriginalFilename();
         if (!filename.matches(".*\\.(jpg|jpeg|png)$")) {
@@ -112,6 +112,6 @@ public class PhotoService {
         }
         return true;
     }
-
+*/
 
 }
