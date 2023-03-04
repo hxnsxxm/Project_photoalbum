@@ -31,6 +31,7 @@ public class PhotoController {
                                                        @RequestParam("photos") MultipartFile[] files) throws IOException {
         List<PhotoDto> photos = new ArrayList<>();
         for (MultipartFile file : files) {
+            if (!photoService.isImageFile(file)) continue;
             PhotoDto photoDto = photoService.savePhoto(file, albumId);
             photos.add(photoDto);
         }

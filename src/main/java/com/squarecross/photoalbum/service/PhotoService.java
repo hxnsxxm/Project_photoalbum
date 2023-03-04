@@ -100,7 +100,18 @@ public class PhotoService {
         }
     }
 
-
+    public boolean isImageFile(MultipartFile file) {
+        String filename = file.getOriginalFilename();
+        if (!filename.matches(".*\\.(jpg|jpeg|png)$")) {
+            //throw new RuntimeException("It it not image extension (jpg, jpeg, png).");
+            return false;
+        }
+        String contentType = file.getContentType();
+        if (!contentType.equals("image/jpg") || !contentType.equals("image/jpeg") || !contentType.equals("image/png")) {
+            return false;
+        }
+        return true;
+    }
 
 
 }
