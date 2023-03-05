@@ -99,7 +99,7 @@ public class PhotoService {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
         }
     }
-/*
+
     public boolean isImageFile(MultipartFile file) {
         String filename = file.getOriginalFilename();
         if (!filename.matches(".*\\.(jpg|jpeg|png)$")) {
@@ -112,6 +112,14 @@ public class PhotoService {
         }
         return true;
     }
-*/
+
+    public File getImageFile(Long photoId) {
+        Optional<Photo> res = photoRepository.findById(photoId);
+        if (res.isEmpty()) {
+            throw new EntityNotFoundException(String.format("ID %d에 해당하는 사진이 존재하지 않습니다.", photoId));
+        }
+        return new File(Constants.PATH_PREFIX + res.get().getOriginalUrl());
+    }
+
 
 }
